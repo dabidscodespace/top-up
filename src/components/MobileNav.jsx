@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const MobileNav = () => {
   return (
-    <nav className="md:hidden  bottom-0 left-0 right-0 z-50 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 border-t border-teal-600/50 shadow-2xl">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 border-t border-teal-600/50 shadow-2xl">
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-teal to-transparent"></div>
       <div className="flex items-center justify-around px-2 py-2">
         <Link className="flex flex-col items-center gap-1 group">

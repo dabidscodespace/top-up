@@ -6,7 +6,7 @@ import MobileNav from "./MobileNav";
 const Navbar = () => {
   return (
     <div>
-      <header className="w-full bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 border-b-2 border-teal-600/30  top-0 left-0 z-50">
+      <header className="w-full bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 border-b-2 border-teal-600/30 fixed top-0 left-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-teal to-transparent"></div>
           <div className="flex items-center justify-center md:justify-between h-16">

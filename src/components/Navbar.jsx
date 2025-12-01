@@ -11,7 +11,7 @@ const Navbar = () => {
           <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-teal to-transparent"></div>
           <div className="flex items-center justify-center md:justify-between h-16">
             {/* Left */}
-            <Link>
+            <Link to={"/"}>
               <div className="flex items-center gap-2">
                 <div className="bg-white w-10 h-10 rounded-lg flex items-center justify-center">
                   <img

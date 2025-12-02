@@ -11,7 +11,7 @@ const Navbar = () => {
           <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-teal to-transparent"></div>
           <div className="flex items-center justify-center md:justify-between h-16">
             {/* Left */}
-            <Link to={"/"}>
+            <Link to={"/"} onClick={() => window.scrollTo({behavior: "smooth", top: 0,})}>
               <div className="flex items-center gap-2">
                 <div className="bg-white w-10 h-10 rounded-lg flex items-center justify-center">
                   <img
@@ -39,7 +39,10 @@ const Navbar = () => {
               <button className="relative p-3 rounded-2xl bg-gray-800/50 border border-teal-700 text-teal">
                 <IoSunnyOutline size={20} />
               </button>
-              <Link to={"/login"} className="font-medium bg-teal-600 px-4 py-2 rounded-md text-sm text-white">
+              <Link
+                to={"/login"}
+                className="font-medium bg-teal-600 px-4 py-2 rounded-md text-sm text-white"
+              >
                 Login
               </Link>
             </div>

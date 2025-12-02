@@ -4,7 +4,7 @@ import { PiLightning } from "react-icons/pi";
 import Banner from "./Banner";
 import Button from "./Button";
 
-const Hero = () => {
+const Hero = ({ onExploreClick }) => {
   return (
     <div className="mt-12">
       <section className="w-full bg-gray-900 text-white overflow-hidden border-b-4 border-teal transition-colors duration-300">
@@ -49,6 +49,7 @@ const Hero = () => {
                   bgColor={"bg-gray-800"}
                   border={"border-2"}
                   borderColor={"border-teal"}
+                  onClick={onExploreClick}
                 />
               </div>
               <div className="">

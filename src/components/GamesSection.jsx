@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { getAllProducts } from "../api";
 import GameItem from "./GameItem";
 import Loader from "./Loader";
 import Title from "./Title";
 
-const GamesSection = () => {
+const GamesSection = forwardRef((props, ref) => {
   const [gameProducts, setGameProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +24,7 @@ const GamesSection = () => {
   }, []);
 
   return (
-    <div className="pt-8 pb-16 md:py-16 px-4 bg-gray-800">
+    <div className="pt-8 pb-16 md:py-16 px-4 bg-gray-800" ref={ref}>
       <div className="max-w-7xl mx-auto">
         <Title text1="Top Up Now" text2="CHOOSE YOUR GAME" />
 
@@ -58,6 +58,6 @@ const GamesSection = () => {
       </div>
     </div>
   );
-};
+});
 
 export default GamesSection;

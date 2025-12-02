@@ -1,7 +1,7 @@
-const Loader = ({ size = 48, color = "border-teal-500" }) => {
+const Loader = ({ size = 80, color = "border-teal-500" }) => {
   return (
     <div
-      className={`inline-block z-30 h-${Math.min(size / 4, 24)} w-${Math.min(
+      className={`inline-block h-${Math.min(size / 4, 24)} w-${Math.min(
         size / 4,
         24
       )} animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] ${color}`}

@@ -145,7 +145,6 @@ export const createAnOrder = async (orderInfo) => {
   }
 };
 
-
 export const getProductAndVariations = async (slug) => {
   try {
     const prod = await getProductBySlug(slug);
@@ -162,6 +161,5 @@ export const getProductAndVariations = async (slug) => {
     return { product: null, variations: [] };
   }
 };
-
 
 export default api;

@@ -8,20 +8,29 @@ const GamesSection = forwardRef((props, ref) => {
   const [gameProducts, setGameProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        const products = await getAllProducts();
-        setGameProducts(products || []);
-      } catch (err) {
-        console.error("GamesSection – fetch error:", err);
-      } finally {
-        setLoading(false);
-      }
+useEffect(() => {
+  async function fetchData() {
+    try {
+      setLoading(true);
+
+      const products = await getAllProducts();
+
+      // ⬇️ Log the entire data array to the console
+      console.log("Fetched products:", products);
+
+      // or log just one item if you want a quick peek:
+      // console.log("First product:", products?.[0]);
+
+      setGameProducts(products || []);
+    } catch (err) {
+      console.error("GamesSection – fetch error:", err);
+    } finally {
+      setLoading(false);
     }
-    fetchData();
-  }, []);
+  }
+
+  fetchData();
+}, []);
 
   return (
     <div className="pt-8 pb-16 md:py-16 px-4 bg-gray-800" ref={ref}>

@@ -12,6 +12,18 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [selectedVar, setSelectedVar] = useState(null);
 
+  const parseName = (name = "") => {
+    // Split name by dash, plus sign, or parentheses — adjust as needed
+    const parts = name
+      .split(/[-()]/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    return {
+      main: parts[0] || name,
+      bonus: parts[1] || "",
+    };
+  };
+
   const scrollToForm = () => {
     const form = document.getElementById("gameform");
     if (form) {
@@ -33,6 +45,7 @@ const Product = () => {
         const { product, variations } = await getProductAndVariations(slug);
         setProduct(product);
         setVariations(variations);
+        console.log(product);
       } catch (err) {
         console.error("Product page error:", err);
       } finally {
@@ -91,6 +104,9 @@ const Product = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
             {variations.map((v) => {
               const isSelected = selectedVar?.id === v.id;
+              const nameText = v.attributes?.[0]?.option || "Package";
+              const { main, bonus } = parseName(nameText);
+
               return (
                 <button
                   key={v.id}
@@ -99,19 +115,36 @@ const Product = () => {
                     scrollToForm();
                   }}
                   className={`group relative p-4 rounded-xl border-2
-                    ${
-                      isSelected
-                        ? "border-teal-400 bg-teal-800/40"
-                        : "border-gray-700 bg-gray-700 hover:border-teal-500"
-                    }
-                    transition-colors duration-200 overflow-hidden cursor-pointer text-start`}
+        ${
+          isSelected
+            ? "border-teal-400 bg-teal-800/40"
+            : "border-gray-700 bg-gray-700 hover:border-teal-500"
+        }
+        transition-colors duration-200 overflow-hidden cursor-pointer text-start`}
                 >
-                  <div className="relative z-10">
-                    <div className="text-lg font-black mb-1 text-white">
-                      {v.attributes?.[0]?.option || "Package"}
+                  <div className="flex items-center justify-between gap-3">
+                    {/* Left side — text */}
+                    <div className="flex flex-col gap-1">
+                      <h3 className="text-base font-extrabold text-white leading-tight">
+                        {main}
+                      </h3>
+                      {bonus && (
+                        <span className="text-xs font-bold text-gray-300 mt-0.5">
+                          {bonus}
+                        </span>
+                      )}
+                      <span className="text-sm font-semibold text-teal-300">
+                        ৳ {v.price}
+                      </span>
                     </div>
-                    <div className="text-sm font-bold text-teal-300">
-                      ৳ {v.price}
+
+                    {/* Right side — image */}
+                    <div className="shrink-0 w-12 h-12">
+                      <img
+                        src={v.image?.src || product.images?.[0]?.src}
+                        alt={main}
+                        className="object-contain w-full h-full"
+                      />
                     </div>
                   </div>
                 </button>

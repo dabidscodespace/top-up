@@ -6,12 +6,14 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
 import Profile from "./pages/Profile";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
     <div>
       <Navbar />
       <ScrollToTop />
+      <ToastContainer/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:slug" element={<Product />} />

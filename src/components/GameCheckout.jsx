@@ -1,9 +1,51 @@
+import { useState } from "react";
 import { CgShoppingCart } from "react-icons/cg";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { LuGamepad2 } from "react-icons/lu";
 import { TbUser } from "react-icons/tb";
+import { toast } from "react-toastify";
+import { createAnOrderDirectly } from "../api";
 
 const GameCheckout = ({ selectedVar }) => {
+  const [loading, setLoading] = useState(false);
+  const [checkOutData, setCheckOutData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    userId: "",
+    zoneId: "",
+  });
+
+  const handleChange = (e) => {
+    setCheckOutData({ ...checkOutData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!selectedVar) {
+      toast.error("Please select a package first");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const order = await createAnOrderDirectly(checkOutData, selectedVar);
+
+      if (order?.id) {
+        toast.success(`Order #${order.id} placed successfully`);
+      } else {
+        toast.success("Failed to create order. Please try again.");
+      }
+    } catch (err) {
+      console.error("Order creation failed:", err);
+      toast.error("Error creating order.");
+    } finally {
+      setLoading(false);
+    }
+
+    setCheckOutData({ name: "", email: "", phone: "", userId: "", zoneId: "" });
+  };
+
   return (
     <div>
       {/* Title */}
@@ -19,7 +61,7 @@ const GameCheckout = ({ selectedVar }) => {
       </div>
 
       {/* Form */}
-      <form className="space-y-4 mb-6">
+      <form className="space-y-4 mb-6" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="group">
             <label
@@ -34,6 +76,10 @@ const GameCheckout = ({ selectedVar }) => {
               type="text"
               className="w-full bg-gray-700 border-2 rounded-xl px-4 py-3 text-white font-bold focus:outline-none focus:bg-gray-600 transition-all placeholder:text-gray-400 group-hover:border-teal-500 border-gray-600 focus:border-teal-400"
               placeholder="Enter your full name"
+              name="name"
+              value={checkOutData.name}
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="group">
@@ -46,7 +92,11 @@ const GameCheckout = ({ selectedVar }) => {
               <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
+              type="email"
+              name="email"
+              value={checkOutData.email}
+              onChange={handleChange}
+              required
               className="w-full bg-gray-700 border-2 rounded-xl px-4 py-3 text-white font-bold focus:outline-none focus:bg-gray-600 transition-all placeholder:text-gray-400 group-hover:border-teal-500 border-gray-600 focus:border-teal-400"
               placeholder="your@gmail.com"
             />
@@ -64,7 +114,11 @@ const GameCheckout = ({ selectedVar }) => {
               <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
+              type="number"
+              name="phone"
+              value={checkOutData.phone}
+              onChange={handleChange}
+              required
               className="w-full bg-gray-700 border-2 rounded-xl px-4 py-3 text-white font-bold focus:outline-none focus:bg-gray-600 transition-all placeholder:text-gray-400 group-hover:border-teal-500 border-gray-600 focus:border-teal-400"
               placeholder="01XXX-XXXXXX"
             />
@@ -79,6 +133,10 @@ const GameCheckout = ({ selectedVar }) => {
               <span className="text-red-500">*</span>
             </label>
             <input
+              name="userId"
+              value={checkOutData.userId}
+              onChange={handleChange}
+              required
               type="text"
               className="w-full bg-gray-700 border-2 rounded-xl px-4 py-3 text-white font-bold focus:outline-none focus:bg-gray-600 transition-all placeholder:text-gray-400 group-hover:border-teal-500 border-gray-600 focus:border-teal-400"
               placeholder="Enter your User ID"
@@ -98,6 +156,10 @@ const GameCheckout = ({ selectedVar }) => {
             </label>
             <input
               type="text"
+              name="zoneId"
+              value={checkOutData.zoneId}
+              onChange={handleChange}
+              required
               className="w-full bg-gray-700 border-2 rounded-xl px-4 py-3 text-white font-bold focus:outline-none focus:bg-gray-600 transition-all placeholder:text-gray-400 group-hover:border-teal-500 border-gray-600 focus:border-teal-400"
               placeholder="Enter your Zone ID"
             />
@@ -119,9 +181,15 @@ const GameCheckout = ({ selectedVar }) => {
           ) : (
             ""
           )}
-          <button className="w-full bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-black text-lg uppercase tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3 overflow-hidden group cursor-pointer">
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-black text-lg uppercase tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3 ${
+              loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
+          >
             <CgShoppingCart className="text-2xl" />
-            <span>Proceed to Payment</span>
+            {loading ? "Placing Order..." : "Proceed to Payment"}
           </button>
         </div>
       </form>

@@ -13,7 +13,6 @@ const Product = () => {
   const [selectedVar, setSelectedVar] = useState(null);
 
   const parseName = (name = "") => {
-    // Split name by dash, plus sign, or parentheses — adjust as needed
     const parts = name
       .split(/[-()]/)
       .map((s) => s.trim())

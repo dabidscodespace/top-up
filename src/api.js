@@ -162,4 +162,39 @@ export const getProductAndVariations = async (slug) => {
   }
 };
 
+// directly placing order to WooCommerce
+
+export const createAnOrderDirectly = async (orderInfo, singleProduct) => {
+  try {
+    const lineItems = [
+      {
+        product_id: singleProduct.id,
+        quantity: 1,
+      },
+    ];
+
+    const payload = {
+      payment_method: "bacs", // or "cod"
+      payment_method_title: "Direct Bank Transfer",
+      set_paid: false, // true if payment already done
+      billing: {
+        first_name: orderInfo.name,
+        email: orderInfo.email,
+        phone: orderInfo.phone,
+      },
+      meta_data: [
+        { key: "User ID", value: orderInfo.userId },
+        { key: "Zone ID", value: orderInfo.zoneId },
+      ],
+      line_items: lineItems,
+    };
+
+    const { data } = await api.post("/orders", payload);
+    return data;
+  } catch (err) {
+    console.error("createAnOrder error:", err.response?.data || err.message);
+    return null;
+  }
+};
+
 export default api;

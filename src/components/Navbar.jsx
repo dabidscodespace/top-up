@@ -39,9 +39,9 @@ const Navbar = () => {
               <button className="relative p-3 rounded-2xl bg-gray-800/50 border border-teal-700 text-teal">
                 <IoSunnyOutline size={20} />
               </button>
-              <button className="font-medium bg-teal-600 px-4 py-2 rounded-md text-sm text-white">
+              <Link to={"/login"} className="font-medium bg-teal-600 px-4 py-2 rounded-md text-sm text-white">
                 Login
-              </button>
+              </Link>
             </div>
           </div>
         </div>

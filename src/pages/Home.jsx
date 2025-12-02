@@ -1,12 +1,13 @@
-import React from 'react'
-import Hero from "../components/Hero"
+import GamesSection from "../components/GamesSection";
+import Hero from "../components/Hero";
 
 const Home = () => {
   return (
-    <div className='bg-'>
-      <Hero/>
+    <div>
+      <Hero />
+      <GamesSection/>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

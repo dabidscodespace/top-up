@@ -7,10 +7,27 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node / build
 node_modules
 dist
 dist-ssr
+.build
+.next
+out
+.cache
+
+# Local environment / secrets
+.env
+.env.*
+!env.example
+
+# Local data
 *.local
+*.sqlite
+.tmp
+coverage
+*.pid
+pids
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +39,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OS
+Thumbs.db
+ehthumbs.db
+
+# Mac
+__MACOSX

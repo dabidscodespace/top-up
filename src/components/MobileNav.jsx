@@ -9,10 +9,7 @@ const MobileNav = () => {
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 border-t border-teal-600/50 shadow-2xl">
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-teal to-transparent"></div>
       <div className="flex items-center justify-around px-2 py-2">
-        <Link
-          to={"/profile"}
-          className="flex flex-col items-center gap-1 group"
-        >
+        <Link to={"/"} className="flex flex-col items-center gap-1 group">
           <div className="p-3 rounded-2xl bg-gray-800/50 group-hover:bg-teal/20 transition-all duration-300 border border-gray-700 group-hover:border-teal">
             <FiHome className="text-gray-400  group-hover:text-teal text-xl" />
           </div>
@@ -45,7 +42,10 @@ const MobileNav = () => {
             DARK
           </span>
         </button>
-        <Link className="flex flex-col items-center gap-1 group relative">
+        <Link
+          to={"/login"}
+          className="flex flex-col items-center gap-1 group relative"
+        >
           <div className="p-3 rounded-2xl bg-gray-800/50 group-hover:bg-teal/20 transition-all duration-300 border border-gray-700 group-hover:border-teal">
             <CgProfile className="text-gray-400  group-hover:text-teal text-xl" />
           </div>

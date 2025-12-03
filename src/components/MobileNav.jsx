@@ -8,7 +8,7 @@ import { LuHeadphones } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 
-const MobileNav = ({onSearchClick}) => {
+const MobileNav = ({ onSearchClick }) => {
   const { isAuthenticated, user, isDarkMode, toggleTheme } = useShop();
 
   const getUserInitial = () => {
@@ -23,7 +23,11 @@ const MobileNav = ({onSearchClick}) => {
 
       <div className="flex items-center justify-around px-2 py-2">
         {/* Home */}
-        <Link to="/" className="group flex flex-col items-center gap-1">
+        <Link
+          onClick={() => window.scrollTo({ behavior: "smooth", top: 0 })}
+          to="/"
+          className="group flex flex-col items-center gap-1"
+        >
           <div className="group-hover:bg-teal/20 group-hover:border-teal rounded-2xl border border-gray-700 bg-gray-800/50 p-3 transition-all duration-300">
             <FiHome className="group-hover:text-teal text-xl text-gray-400" />
           </div>
@@ -33,7 +37,10 @@ const MobileNav = ({onSearchClick}) => {
         </Link>
 
         {/* Search */}
-        <button onClick={onSearchClick} className="group relative flex cursor-pointer flex-col items-center gap-1">
+        <button
+          onClick={onSearchClick}
+          className="group relative flex cursor-pointer flex-col items-center gap-1"
+        >
           <div className="group-hover:bg-teal/20 group-hover:border-teal rounded-2xl border border-gray-700 bg-gray-800/50 p-3 transition-all duration-300">
             <IoSearchOutline className="group-hover:text-teal text-xl text-gray-400" />
           </div>

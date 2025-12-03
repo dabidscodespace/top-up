@@ -99,10 +99,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      <MobileNav
-        isAuthenticated={isAuthenticated}
-        onSearchClick={openSearch}
-      />
+      <MobileNav isAuthenticated={isAuthenticated} onSearchClick={openSearch} />
 
       {/* Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />

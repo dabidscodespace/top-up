@@ -8,62 +8,62 @@ import { TfiReload, TfiTarget } from "react-icons/tfi";
 const Footer = () => {
   return (
     <div className="mb-20 md:mb-0">
-      <footer className="relative bg-linear-to-b from-gray-900 via-gray-800 to-black pt-20 pb-8 overflow-hidden border-t-4 border-teal">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <footer className="border-teal relative overflow-hidden border-t-4 bg-linear-to-b from-gray-900 via-gray-800 to-black pt-20 pb-8">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             <div className="group">
-              <div className="bg-linear-to-br from-gray-800/90 to-gray-900/90 rounded-lg p-6 border-2 transition-all duration-300 border-teal-600/30 hover:border-teal-600">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-1 h-8 bg-linear-to-b from-teal to-teal-500 rounded-full"></div>
-                  <h3 className="text-xl font-black text-white tracking-wider uppercase">
+              <div className="rounded-lg border-2 border-teal-600/30 bg-linear-to-br from-gray-800/90 to-gray-900/90 p-6 transition-all duration-300 hover:border-teal-600">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="from-teal h-8 w-1 rounded-full bg-linear-to-b to-teal-500"></div>
+                  <h3 className="text-xl font-black tracking-wider text-white uppercase">
                     <span className="text-teal">SQUAD</span> UP
                   </h3>
-                  <PiLightning className="text-teal text-2xl animate-pulse" />
+                  <PiLightning className="text-teal animate-pulse text-2xl" />
                 </div>
                 <div className="flex justify-start gap-4">
-                  <button className="flex items-center justify-center w-12 h-12 bg-linear-to-br from-teal to-teal-700 hover:from-teal-500 hover:to-teal-600 text-white transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 rounded-tr-xl rounded-bl-xl">
+                  <button className="from-teal flex h-12 w-12 transform items-center justify-center rounded-tr-xl rounded-bl-xl bg-linear-to-br to-teal-700 text-white transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:from-teal-500 hover:to-teal-600">
                     <FiFacebook className="text-xl" />
                   </button>
-                  <button className="flex items-center justify-center w-12 h-12 bg-linear-to-br from-teal to-teal-700 hover:from-teal-500 hover:to-teal-600 text-white transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 rounded-tr-xl rounded-bl-xl">
+                  <button className="from-teal flex h-12 w-12 transform items-center justify-center rounded-tr-xl rounded-bl-xl bg-linear-to-br to-teal-700 text-white transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:from-teal-500 hover:to-teal-600">
                     <PiYoutubeLogo className="text-xl" />
                   </button>
-                  <button className="flex items-center justify-center w-12 h-12 bg-linear-to-br from-teal to-teal-700 hover:from-teal-500 hover:to-teal-600 text-white transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 rounded-tr-xl rounded-bl-xl">
+                  <button className="from-teal flex h-12 w-12 transform items-center justify-center rounded-tr-xl rounded-bl-xl bg-linear-to-br to-teal-700 text-white transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:from-teal-500 hover:to-teal-600">
                     <IoPaperPlaneOutline className="text-xl" />
                   </button>
                 </div>
               </div>
             </div>
             <div className="">
-              <div className="bg-linear-to-br from-gray-800/90 to-gray-900/90 rounded-lg p-6 border-2 transition-all duration-300 border-teal-600/30 hover:border-teal-600">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-1 h-8 bg-linear-to-b from-teal to-teal-500 rounded-full"></div>
-                  <h3 className="text-xl font-black text-white tracking-wider uppercase">
+              <div className="rounded-lg border-2 border-teal-600/30 bg-linear-to-br from-gray-800/90 to-gray-900/90 p-6 transition-all duration-300 hover:border-teal-600">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="from-teal h-8 w-1 rounded-full bg-linear-to-b to-teal-500"></div>
+                  <h3 className="text-xl font-black tracking-wider text-white uppercase">
                     <span className="text-teal">Contact</span> HQ
                   </h3>
-                  <TfiTarget className="text-teal text-2xl animate-pulse" />
+                  <TfiTarget className="text-teal animate-pulse text-2xl" />
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-2 rounded hover:bg-teal/10 transition-colors duration-200 group">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600/20 text-teal-500 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 rounded-tr-xl rounded-bl-xl">
+                  <div className="hover:bg-teal/10 group flex items-center gap-3 rounded p-2 transition-colors duration-200">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-tr-xl rounded-bl-xl bg-teal-600/20 text-teal-500 transition-colors duration-200 group-hover:bg-teal-600 group-hover:text-white">
                       <FiPhone />
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">
+                    <span className="text-sm font-medium text-gray-300">
                       +016139XXXXX
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 p-2 rounded hover:bg-teal/10 transition-colors duration-200 group">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600/20 text-teal-500 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 rounded-tr-xl rounded-bl-xl">
+                  <div className="hover:bg-teal/10 group flex items-center gap-3 rounded p-2 transition-colors duration-200">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-tr-xl rounded-bl-xl bg-teal-600/20 text-teal-500 transition-colors duration-200 group-hover:bg-teal-600 group-hover:text-white">
                       <MdOutlineMail />
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">
+                    <span className="text-sm font-medium text-gray-300">
                       support@topupx.com
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 p-2 rounded hover:bg-teal/10 transition-colors duration-200 group">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600/20 text-teal-500 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 rounded-tr-xl rounded-bl-xl">
+                  <div className="hover:bg-teal/10 group flex items-center gap-3 rounded p-2 transition-colors duration-200">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-tr-xl rounded-bl-xl bg-teal-600/20 text-teal-500 transition-colors duration-200 group-hover:bg-teal-600 group-hover:text-white">
                       <SlLocationPin />
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">
+                    <span className="text-sm font-medium text-gray-300">
                       Ashambosti Kaptai Road, Rangamati-4500
                     </span>
                   </div>
@@ -71,36 +71,36 @@ const Footer = () => {
               </div>
             </div>
             <div className="">
-              <div className="bg-linear-to-br from-gray-800/90 to-gray-900/90 rounded-lg p-6 border-2 transition-all duration-300 border-teal-600/30 hover:border-teal-600">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-1 h-8 bg-linear-to-b from-teal to-teal-500 rounded-full"></div>
-                  <h3 className="text-xl font-black text-white tracking-wider uppercase">
+              <div className="rounded-lg border-2 border-teal-600/30 bg-linear-to-br from-gray-800/90 to-gray-900/90 p-6 transition-all duration-300 hover:border-teal-600">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="from-teal h-8 w-1 rounded-full bg-linear-to-b to-teal-500"></div>
+                  <h3 className="text-xl font-black tracking-wider text-white uppercase">
                     <span className="text-teal">More</span> Information
                   </h3>
-                  <IoShieldOutline className="text-teal text-2xl animate-pulse" />
+                  <IoShieldOutline className="text-teal animate-pulse text-2xl" />
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-2 rounded hover:bg-teal/10 transition-colors duration-200 group">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600/20 text-teal-500 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 rounded-tr-xl rounded-bl-xl">
+                  <div className="hover:bg-teal/10 group flex items-center gap-3 rounded p-2 transition-colors duration-200">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-tr-xl rounded-bl-xl bg-teal-600/20 text-teal-500 transition-colors duration-200 group-hover:bg-teal-600 group-hover:text-white">
                       <FiFileText />
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">
+                    <span className="text-sm font-medium text-gray-300">
                       Terms & Conditions
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 p-2 rounded hover:bg-teal/10 transition-colors duration-200 group">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600/20 text-teal-500 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 rounded-tr-xl rounded-bl-xl">
+                  <div className="hover:bg-teal/10 group flex items-center gap-3 rounded p-2 transition-colors duration-200">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-tr-xl rounded-bl-xl bg-teal-600/20 text-teal-500 transition-colors duration-200 group-hover:bg-teal-600 group-hover:text-white">
                       <IoShieldOutline />
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">
+                    <span className="text-sm font-medium text-gray-300">
                       Privacy & Policy
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 p-2 rounded hover:bg-teal/10 transition-colors duration-200 group">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600/20 text-teal-500 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 rounded-tr-xl rounded-bl-xl">
+                  <div className="hover:bg-teal/10 group flex items-center gap-3 rounded p-2 transition-colors duration-200">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-tr-xl rounded-bl-xl bg-teal-600/20 text-teal-500 transition-colors duration-200 group-hover:bg-teal-600 group-hover:text-white">
                       <TfiReload />
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">
+                    <span className="text-sm font-medium text-gray-300">
                       Refund Policy
                     </span>
                   </div>
@@ -109,16 +109,16 @@ const Footer = () => {
             </div>
           </div>
           <div className="relative">
-            <div className="absolute inset-0 bg-linear-to-r from-transparent via-teal to-transparent h-px"></div>
-            <div className="text-center pt-8 space-y-2">
-              <p className="text-gray-400 font-bold text-sm">
+            <div className="via-teal absolute inset-0 h-px bg-linear-to-r from-transparent to-transparent"></div>
+            <div className="space-y-2 pt-8 text-center">
+              <p className="text-sm font-bold text-gray-400">
                 Copyright © {new Date().getFullYear()}
-                <span className="font-black text-teal ml-1">TOPUP X</span>. All
+                <span className="text-teal ml-1 font-black">TOPUP X</span>. All
                 rights reserved.
               </p>
-              <p className="text-gray-500 text-xs">
+              <p className="text-xs text-gray-500">
                 Design and Developed with love by{" "}
-                <span className="font-black text-teal ml-1">Dabid Marma</span>
+                <span className="text-teal ml-1 font-black">Dabid Marma</span>
               </p>
             </div>
           </div>

@@ -7,33 +7,33 @@ import Button from "./Button";
 const Hero = ({ onExploreClick }) => {
   return (
     <div className="mt-12">
-      <section className="w-full bg-gray-900 text-white overflow-hidden border-b-4 border-teal transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-4 sm:py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8 items-center">
+      <section className="border-teal w-full overflow-hidden border-b-4 bg-teal-100 text-white transition-colors duration-300 dark:bg-gray-900">
+        <div className="mx-auto max-w-7xl px-4 pt-8 pb-4 sm:px-6 sm:py-12 md:py-16">
+          <div className="grid grid-cols-1 items-center md:grid-cols-2 md:gap-8">
             {/* LEFT */}
-            <div className="text-center md:text-left space-y-4 sm:space-y-6 order-2 md:order-1">
+            <div className="order-2 space-y-4 text-center sm:space-y-6 md:order-1 md:text-left">
               <div className="hidden md:block">
-                <div className="inline-flex mb-4 items-center gap-2 bg-linear-to-r from-teal-600 to-teal-700 text-white px-4 sm:px-6 py-2 rounded-full border-2 border-teal-700">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border-2 border-teal-700 bg-linear-to-r from-teal-600 to-teal-700 px-4 py-2 text-white sm:px-6">
                   <PiLightning size={21} className="animate-pulse text-white" />
-                  <span className="text-xs sm:text-sm font-black tracking-wider">
+                  <span className="text-xs font-black tracking-wider sm:text-sm">
                     INSTANT DELIVERY
                   </span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                  <span className="block bg-linear-to-r from-teal via-teal-500 to-teal-700 bg-clip-text text-transparent">
+                <h1 className="text-3xl leading-tight font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+                  <span className="from-teal block bg-linear-to-r via-teal-500 to-teal-700 bg-clip-text text-transparent">
                     TOPUP X
                   </span>
-                  <span className="block text-2xl sm:text-3xl md:text-3xl lg:text-4xl mb-3 mt-2 text-gray-900 dark:text-white">
+                  <span className="mt-2 mb-3 block text-2xl text-gray-900 sm:text-3xl md:text-3xl lg:text-4xl dark:text-white">
                     YOUR ULTIMATE GAMING HUB
                   </span>
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl font-semibold text-gray-600 dark:text-gray-300 leading-relaxed px-4 md:px-0">
+                <p className="px-4 text-base leading-relaxed font-semibold text-gray-600 sm:text-lg md:px-0 md:text-xl dark:text-gray-300">
                   Get instant game top-ups, premium gaming gear, and
                   accessories. Best prices, lightning-fast delivery, and
                   unbeatable quality!
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center md:justify-start px-4 md:px-0">
+              <div className="flex flex-col flex-wrap justify-center gap-3 px-4 sm:flex-row sm:gap-4 md:justify-start md:px-0">
                 <Button
                   text={"GAMING GADGETS"}
                   textColor={"text-white"}
@@ -46,32 +46,42 @@ const Hero = ({ onExploreClick }) => {
                 <Button
                   text={"GAME COIN TOP-UP"}
                   textColor={"text-teal"}
-                  bgColor={"bg-gray-800"}
+                  bgColor={"dark:bg-gray-800"}
                   border={"border-2"}
                   borderColor={"border-teal"}
+                  iconColor={"text-teal"}
                   onClick={onExploreClick}
                 />
               </div>
               <div className="">
-                <div className="sm:hidden relative flex overflow-hidden">
+                <div className="relative flex overflow-hidden sm:hidden">
                   {/* <TextSlider /> */}
                 </div>
-                <div className="hidden sm:flex sm:gap-4 sm:justify-center md:justify-start sm:pt-6">
-                  <div className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-lg border border-teal">
-                    <PiLightning size={20} className="text-teal" />
-                    <span className="text-sm font-bold text-gray-300">
+                <div className="hidden sm:flex sm:justify-center sm:gap-4 sm:pt-6 md:justify-start">
+                  <div className="border-teal flex items-center gap-2 rounded-lg border bg-teal-200 px-4 py-2 dark:bg-gray-800">
+                    <PiLightning
+                      size={20}
+                      className="dark:text-teal text-teal-500"
+                    />
+                    <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
                       Fast Delivery
                     </span>
                   </div>
-                  <div className="flex gap-2 items-center bg-gray-800 px-4 py-2 rounded-lg border border-teal min-w-max">
-                    <BsTrophy size={20} className="text-teal" />
-                    <span className="text-sm font-bold text-gray-300">
+                  <div className="border-teal flex min-w-max items-center gap-2 rounded-lg border bg-teal-200 px-4 py-2 dark:bg-gray-800">
+                    <BsTrophy
+                      size={20}
+                      className="dark:text-teal text-teal-500"
+                    />
+                    <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
                       Best Prices
                     </span>
                   </div>
-                  <div className="flex gap-2 items-center bg-gray-800 px-4 py-2 rounded-lg border border-teal min-w-max">
-                    <FaRegStar size={20} className="text-teal" />
-                    <span className="text-sm font-bold text-gray-300">
+                  <div className="border-teal flex min-w-max items-center gap-2 rounded-lg border bg-teal-200 px-4 py-2 dark:bg-gray-800">
+                    <FaRegStar
+                      size={20}
+                      className="dark:text-teal text-teal-500"
+                    />
+                    <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
                       Top Quality
                     </span>
                   </div>
@@ -79,7 +89,7 @@ const Hero = ({ onExploreClick }) => {
               </div>
             </div>
             {/* Right side */}
-            <div className="order-1 md:order-2 border-4 border-teal rounded-4xl cursor-pointer">
+            <div className="border-teal order-1 cursor-pointer rounded-4xl border-4 md:order-2">
               <Banner />
             </div>
           </div>

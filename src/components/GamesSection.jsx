@@ -26,21 +26,19 @@ const GamesSection = forwardRef((props, ref) => {
     fetchData();
   }, []);
 
-  return (
-    <div className="pt-8 pb-16 md:py-16 px-4 bg-gray-800" ref={ref}>
-      <div className="max-w-7xl mx-auto">
-        <Title text1="Top Up Now" text2="CHOOSE YOUR GAME" />
+  if (loading) return <Loader />;
 
-        {/*  Loader  */}
-        {loading && (
-          <div className="flex items-center justify-center py-10">
-            <Loader />
-          </div>
-        )}
+  return (
+    <div
+      className="bg-teal/35 px-4 pt-8 pb-16 md:py-16 dark:bg-gray-800"
+      ref={ref}
+    >
+      <div className="mx-auto max-w-7xl">
+        <Title text1="Top Up Now" text2="CHOOSE YOUR GAME" />
 
         {/*  Product grid  */}
         {!loading && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6 md:gap-6">
             {gameProducts.length > 0 ? (
               gameProducts.map((item) => (
                 <GameItem
@@ -52,7 +50,7 @@ const GamesSection = forwardRef((props, ref) => {
                 />
               ))
             ) : (
-              <p className="text-center text-gray-400 col-span-full">
+              <p className="col-span-full text-center text-gray-400">
                 No games available.
               </p>
             )}

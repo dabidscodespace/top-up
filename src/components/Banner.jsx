@@ -23,7 +23,7 @@ const Banner = () => {
             alt="Slide 1"
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover rounded-xl select-none"
+            className="h-full w-full rounded-xl object-cover select-none"
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -32,7 +32,7 @@ const Banner = () => {
             alt="Slide 2"
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover rounded-xl select-none"
+            className="h-full w-full rounded-xl object-cover select-none"
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -41,7 +41,7 @@ const Banner = () => {
             loading="lazy"
             decoding="async"
             alt="Slide 2"
-            className="w-full h-full object-cover rounded-xl select-none"
+            className="h-full w-full rounded-xl object-cover select-none"
           />
         </SwiperSlide>
       </Swiper>

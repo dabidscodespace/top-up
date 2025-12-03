@@ -7,36 +7,20 @@ import {
   FiPackage,
   FiUser,
 } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCustomerOrders } from "../api";
+import { useShop } from "../context/ShopContext";
 
-const Profile = ({ handleLogout }) => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("info"); // "info" or "orders"
-  const [userData, setUserData] = useState(null);
+const Profile = () => {
+  const { isAuthenticated, user, logout } = useShop();
+  const [activeTab, setActiveTab] = useState("info");
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    if (!token) {
-      toast.error("Please login first");
-      navigate("/login");
-    }
-  }, [navigate]);
-
-  // Get user data from localStorage
-  useEffect(() => {
-    try {
-      const data = localStorage.getItem("user_data");
-      if (data) {
-        setUserData(JSON.parse(data));
-      }
-    } catch (error) {
-      console.error("Error parsing user data:", error);
-    }
-  }, []);
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   // Fetch orders when orders tab is active
   useEffect(() => {
@@ -44,6 +28,7 @@ const Profile = ({ handleLogout }) => {
       fetchOrders();
     }
   }, [activeTab]);
+
   const fetchOrders = async () => {
     setIsLoading(true);
     try {
@@ -58,9 +43,8 @@ const Profile = ({ handleLogout }) => {
   };
 
   const getUserInitial = () => {
-    if (userData?.display_name)
-      return userData.display_name.charAt(0).toUpperCase();
-    if (userData?.username) return userData.username.charAt(0).toUpperCase();
+    if (user?.display_name) return user.display_name.charAt(0).toUpperCase();
+    if (user?.username) return user.username.charAt(0).toUpperCase();
     return "U";
   };
 
@@ -68,9 +52,13 @@ const Profile = ({ handleLogout }) => {
     switch (status) {
       case "completed":
         return "bg-green-500/20 text-green-400 border-green-500/50";
+      case "processing":
+        return "bg-blue-500/20 text-blue-400 border-blue-500/50";
       case "pending":
+      case "on-hold":
         return "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
       case "cancelled":
+      case "failed":
         return "bg-red-500/20 text-red-400 border-red-500/50";
       default:
         return "bg-gray-500/20 text-gray-400 border-gray-500/50";
@@ -79,48 +67,49 @@ const Profile = ({ handleLogout }) => {
 
   return (
     <div className="mt-12">
-      <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 px-4 py-8 pb-24">
-        <div className="max-w-2xl mx-auto">
+      <div className="min-h-screen bg-teal-100 bg-linear-to-br px-4 py-8 pb-24 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="mx-auto max-w-2xl">
           {/* Profile Header */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 mb-6">
+          <div className="mb-6 rounded-2xl border border-teal-600 bg-teal-300/70 p-6 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/50">
             <div className="flex items-center gap-4">
               {/* Avatar with Glow */}
               <div className="relative">
-                <div className="w-20 h-20 rounded-full bg-linear-to-br from-teal-400 to-teal-700 flex items-center justify-center text-white text-2xl font-bold shadow-[0_0_30px_rgba(20,184,166,0.6)] border-2 border-teal-400">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-teal-700 bg-linear-to-br from-teal-400 to-teal-700 text-2xl font-bold text-white shadow-[0_0_30px_rgba(20,184,166,0.6)] dark:border-teal-400">
                   {getUserInitial()}
                 </div>
                 {/* Online indicator */}
-                <div className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-3 border-gray-800 shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
+                <div className="absolute right-1 bottom-1 h-5 w-5 rounded-full border-3 border-gray-800 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
               </div>
 
-              {/* User Info */}
               <div className="flex-1">
-                <h1 className="text-xl font-bold text-white">
-                  {userData?.display_name || userData?.username || "User"}
+                <h1 className="text-xl font-bold text-gray-800 dark:text-white">
+                  {user?.display_name || user?.username || "User"}
                 </h1>
-                <p className="text-gray-400 text-sm">@{userData?.username}</p>
-                <p className="text-teal-400 text-sm mt-1">{userData?.email}</p>
+                <p className="text-sm text-gray-700 dark:text-gray-400">
+                  @{user?.username}
+                </p>
+                <p className="mt-1 text-sm text-teal-800 dark:text-teal-400">
+                  {user?.email}
+                </p>
               </div>
 
-              {/* Logout Button */}
-              <Link
-                to={"/login"}
-                onClick={handleLogout}
-                className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-500/50 transition-all duration-300"
+              <button
+                onClick={logout}
+                className="rounded-x cursor-pointer border-red-500/30 bg-red-800 p-3 text-white transition-all duration-300 hover:bg-red-600 dark:border dark:bg-red-500/10 dark:text-red-400 dark:hover:border-red-500/50 dark:hover:bg-red-500/20"
               >
                 <FiLogOut className="text-xl" />
-              </Link>
+              </button>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 mb-6">
+          <div className="mb-6 flex gap-2">
             <button
               onClick={() => setActiveTab("info")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold tracking-wide uppercase transition-all duration-300 ${
                 activeTab === "info"
                   ? "bg-teal-600 text-white shadow-[0_0_20px_rgba(20,184,166,0.5)]"
-                  : "bg-gray-800/50 text-gray-400 border border-gray-700 hover:border-teal-500/50  hover:text-teal-400"
+                  : "border border-teal-600 bg-teal-300 text-gray-800 hover:border-teal-500/50 hover:bg-gray-800 hover:text-white dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:text-teal-400"
               }`}
             >
               <FiUser className="text-lg" />
@@ -128,10 +117,10 @@ const Profile = ({ handleLogout }) => {
             </button>
             <button
               onClick={() => setActiveTab("orders")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold tracking-wide uppercase transition-all duration-300 ${
                 activeTab === "orders"
                   ? "bg-teal-600 text-white shadow-[0_0_20px_rgba(20,184,166,0.5)]"
-                  : "bg-gray-800/50 text-gray-400 border border-gray-700 hover:border-teal-500/50 hover:text-teal-400"
+                  : "border border-teal-600 bg-teal-300 text-gray-800 hover:border-teal-500/50 hover:bg-gray-800 hover:text-white dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:text-teal-400"
               }`}
             >
               <FiPackage className="text-lg" />
@@ -140,15 +129,14 @@ const Profile = ({ handleLogout }) => {
           </div>
 
           {/* Tab Content */}
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden">
-            {/* Information Tab */}
+          <div className="overflow-hidden rounded-2xl border border-teal-600 bg-teal-300 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/50">
             {activeTab === "info" && (
               <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-bold text-white">
+                <div className="mb-6 flex items-center justify-between">
+                  <h2 className="text-lg font-bold text-gray-800 dark:text-white">
                     Personal Information
                   </h2>
-                  <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600/20 border border-teal-500/50 text-teal-400 hover:bg-teal-600/30 transition-all duration-300 text-sm font-semibold">
+                  <button className="flex cursor-pointer items-center gap-2 rounded-lg border border-teal-500/50 bg-teal-800 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-teal-600/30 dark:bg-teal-600/20 dark:text-teal-400">
                     <FiEdit2 />
                     Edit
                   </button>
@@ -156,85 +144,85 @@ const Profile = ({ handleLogout }) => {
 
                 <div className="space-y-4">
                   {/* Username */}
-                  <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+                  <div className="rounded-xl border border-teal-600 bg-teal-700 p-4 dark:border-gray-700 dark:bg-gray-900/50">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                        <FiUser className="text-teal-400" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 dark:bg-teal-600/20">
+                        <FiUser className="text-white dark:text-teal-400" />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs uppercase tracking-wide">
+                        <p className="text-xs tracking-wide text-gray-400 uppercase">
                           Username
                         </p>
-                        <p className="text-white font-semibold">
-                          {userData?.username || "N/A"}
+                        <p className="font-semibold text-white">
+                          {user?.username || "N/A"}
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Display Name */}
-                  <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+                  <div className="rounded-xl border border-teal-600 bg-teal-700 p-4 dark:border-gray-700 dark:bg-gray-900/50">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                        <FiUser className="text-teal-400" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 dark:bg-teal-600/20">
+                        <FiUser className="text-white dark:text-teal-400" />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs uppercase tracking-wide">
+                        <p className="text-xs tracking-wide text-gray-400 uppercase">
                           Display Name
                         </p>
-                        <p className="text-white font-semibold">
-                          {userData?.display_name || "N/A"}
+                        <p className="font-semibold text-white">
+                          {user?.display_name || "N/A"}
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Email */}
-                  <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+                  <div className="rounded-xl border border-teal-600 bg-teal-700 p-4 dark:border-gray-700 dark:bg-gray-900/50">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                        <FiMail className="text-teal-400" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 dark:bg-teal-600/20">
+                        <FiMail className="text-white dark:text-teal-400" />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs uppercase tracking-wide">
+                        <p className="text-xs tracking-wide text-gray-400 uppercase">
                           Email
                         </p>
-                        <p className="text-white font-semibold">
-                          {userData?.email || "N/A"}
+                        <p className="font-semibold text-white">
+                          {user?.email || "N/A"}
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* First Name */}
-                  <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+                  <div className="rounded-xl border border-teal-600 bg-teal-700 p-4 dark:border-gray-700 dark:bg-gray-900/50">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                        <FiUser className="text-teal-400" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 dark:bg-teal-600/20">
+                        <FiUser className="text-white dark:text-teal-400" />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs uppercase tracking-wide">
+                        <p className="text-xs tracking-wide text-gray-400 uppercase">
                           First Name
                         </p>
-                        <p className="text-white font-semibold">
-                          {userData?.first_name || "N/A"}
+                        <p className="font-semibold text-white">
+                          {user?.first_name || "N/A"}
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Last Name */}
-                  <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
+                  <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                        <FiUser className="text-teal-400" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 dark:bg-teal-600/20">
+                        <FiUser className="text-white dark:text-teal-400" />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs uppercase tracking-wide">
+                        <p className="text-xs tracking-wide text-gray-400 uppercase">
                           Last Name
                         </p>
-                        <p className="text-white font-semibold">
-                          {userData?.last_name || "N/A"}
+                        <p className="font-semibold text-white">
+                          {user?.last_name || "N/A"}
                         </p>
                       </div>
                     </div>
@@ -246,19 +234,19 @@ const Profile = ({ handleLogout }) => {
             {/* Orders Tab */}
             {activeTab === "orders" && (
               <div className="p-6">
-                <h2 className="text-lg font-bold text-white mb-6">
+                <h2 className="mb-6 text-lg font-bold text-gray-800 dark:text-white">
                   Order History
                 </h2>
 
                 {isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <div className="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-teal-500 border-t-transparent"></div>
                   </div>
                 ) : orders.length === 0 ? (
-                  <div className="text-center py-12">
-                    <FiPackage className="text-5xl text-gray-600 mx-auto mb-4" />
-                    <p className="text-gray-400 font-semibold">No orders yet</p>
-                    <p className="text-gray-500 text-sm mt-1">
+                  <div className="py-12 text-center">
+                    <FiPackage className="mx-auto mb-4 text-5xl text-gray-600" />
+                    <p className="font-semibold text-gray-400">No orders yet</p>
+                    <p className="mt-1 text-sm text-gray-500">
                       Your order history will appear here
                     </p>
                   </div>
@@ -267,24 +255,22 @@ const Profile = ({ handleLogout }) => {
                     {orders.map((order) => (
                       <div
                         key={order.id}
-                        className="bg-gray-900/50 rounded-xl p-4 border border-gray-700 hover:border-teal-500/50 transition-all duration-300"
+                        className="rounded-xl border border-gray-700 bg-teal-700 p-4 transition-all duration-300 hover:border-teal-500/50 dark:bg-gray-900/50"
                       >
                         {/* Order Header */}
-                        <div className="flex items-center justify-between mb-3">
+                        <div className="mb-3 flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                              <FiPackage className="text-teal-400" />
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 dark:bg-teal-600/20">
+                              <FiPackage className="text-white dark:text-teal-400" />
                             </div>
                             <div>
-                              {/* ✅ Use order.number or order.id */}
-                              <p className="text-white font-bold">
+                              <p className="font-bold text-white">
                                 #{order.number || order.id}
                               </p>
-                              <div className="flex items-center gap-1 text-gray-400 text-xs">
+                              <div className="flex items-center gap-1 text-xs text-white dark:text-gray-400">
                                 <FiCalendar className="text-xs" />
-                                {/* ✅ Use date_created instead of date */}
                                 {new Date(
-                                  order.date_created
+                                  order.date_created,
                                 ).toLocaleDateString("en-US", {
                                   year: "numeric",
                                   month: "short",
@@ -294,8 +280,8 @@ const Profile = ({ handleLogout }) => {
                             </div>
                           </div>
                           <span
-                            className={`px-3 py-1 rounded-full text-xs font-bold uppercase border ${getStatusColor(
-                              order.status
+                            className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${getStatusColor(
+                              order.status,
                             )}`}
                           >
                             {order.status}
@@ -303,30 +289,28 @@ const Profile = ({ handleLogout }) => {
                         </div>
 
                         {/* Order Items */}
-                        <div className="border-t border-gray-700 pt-3 mt-3">
-                          {/* ✅ Use line_items instead of items */}
+                        <div className="mt-3 border-t border-gray-700 pt-3">
                           {order.line_items?.map((item, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-between text-sm py-1"
+                              className="flex items-center justify-between py-1 text-sm"
                             >
-                              <span className="text-gray-300">
+                              <span className="text-gray-200 dark:text-gray-300">
                                 {item.name} x{item.quantity}
                               </span>
-                              <span className="text-teal-400 font-semibold">
-                                {/* ✅ Use subtotal or calculate price */}৳
-                                {item.subtotal || item.price * item.quantity}
+                              <span className="font-semibold text-teal-400">
+                                ৳{item.subtotal || item.price * item.quantity}
                               </span>
                             </div>
                           ))}
                         </div>
 
                         {/* Order Total */}
-                        <div className="border-t border-gray-700 pt-3 mt-3 flex items-center justify-between">
-                          <span className="text-gray-400 font-semibold">
+                        <div className="mt-3 flex items-center justify-between border-t border-gray-700 pt-3">
+                          <span className="font-semibold text-white dark:text-gray-400">
                             Total
                           </span>
-                          <span className="text-white font-bold text-lg">
+                          <span className="text-lg font-bold text-white">
                             ৳{order.total}
                           </span>
                         </div>

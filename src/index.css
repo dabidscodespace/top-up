@@ -1,6 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
 body {
   font-family: "Noto Sans Bengali", sans-serif;
   margin: 0;
@@ -11,5 +21,4 @@ body {
 
 @theme{
   --color-teal: #30c9bb;
-  --color-lavender: #a855f7;
 }

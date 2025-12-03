@@ -7,111 +7,83 @@ import Loader from "../components/Loader";
 
 const Product = () => {
   const { slug } = useParams();
-  
-  // ═══════════════════════════════════════════════════════════
-  // STATES - Clean naming
-  // ═══════════════════════════════════════════════════════════
-  
   const [product, setProduct] = useState(null);
   const [variations, setVariations] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [selectedVariation, setSelectedVariation] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedVar, setSelectedVar] = useState(null);
 
-  // ═══════════════════════════════════════════════════════════
-  // HELPER FUNCTIONS
-  // ═══════════════════════════════════════════════════════════
-
-  // Parse variation name into main + bonus parts
-  const parseVariationName = (name = "") => {
+  const parseName = (name = "") => {
     const parts = name
       .split(/[-()]/)
       .map((s) => s.trim())
       .filter(Boolean);
-      
     return {
       main: parts[0] || name,
       bonus: parts[1] || "",
     };
   };
 
-  // Scroll to checkout form
-  const scrollToCheckout = () => {
-    const form = document.getElementById("checkout-form");
+  const scrollToForm = () => {
+    const form = document.getElementById("gameform");
     if (form) {
       const headerHeight = 80;
-      const y = form.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      const y =
+        form.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
     }
   };
 
-  // Handle variation selection
-  const handleSelectVariation = (variation) => {
-    setSelectedVariation(variation);
-    scrollToCheckout();
-  };
-
-  // ═══════════════════════════════════════════════════════════
-  // FETCH PRODUCT DATA
-  // ═══════════════════════════════════════════════════════════
-
   useEffect(() => {
-    const fetchProductData = async () => {
+    async function fetchData() {
       try {
-        setIsLoading(true);
+        setLoading(true);
         const { product, variations } = await getProductAndVariations(slug);
         setProduct(product);
         setVariations(variations);
-        console.log("Product loaded:", product);
-      } catch (error) {
-        console.error("Failed to load product:", error);
+        console.log(product);
+        console.log(variations);
+      } catch (err) {
+        console.error("Product page error:", err);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
-    };
+    }
 
-    fetchProductData();
+    fetchData();
   }, [slug]);
 
-  // ═══════════════════════════════════════════════════════════
-  // RENDER STATES
-  // ═══════════════════════════════════════════════════════════
-
-  if (isLoading) {
+  if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <div>
         <Loader />
       </div>
     );
-  }
 
-  if (!product) {
+  if (!product)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="flex min-h-screen items-center justify-center bg-teal-100 text-white dark:bg-gray-900">
         Product not found.
       </div>
     );
-  }
-
-  // ═══════════════════════════════════════════════════════════
-  // MAIN RENDER
-  // ═══════════════════════════════════════════════════════════
-
   return (
-    <div className="mt-12 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 min-h-screen">
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-8">
-        
+    <div className="mt-12 min-h-screen bg-teal-100 bg-linear-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 py-8">
         {/* ===== Product Header ===== */}
-        <div className="bg-gray-800 rounded-2xl shadow-xl border-2 border-teal-800 overflow-hidden mb-6 relative">
-          <div className="absolute top-0 left-0 w-2 h-full bg-linear-to-b from-teal-400 to-teal-600" />
-          <div className="absolute top-0 right-0 w-2 h-full bg-linear-to-b from-teal-400 to-teal-600" />
+        <div className="bg-teal/20 relative mb-6 overflow-hidden rounded-2xl border-2 border-teal-800 shadow-xl dark:bg-gray-800">
+          <div className="absolute top-0 left-0 h-full w-2 bg-linear-to-b from-teal-400 to-teal-600" />
+          <div className="absolute top-0 right-0 h-full w-2 bg-linear-to-b from-teal-400 to-teal-600" />
           <div className="p-6 md:p-8">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="mb-4 flex items-center gap-3">
               <div>
-                <div className="text-xs font-black text-teal tracking-wider mb-1">
+                <div className="dark:text-teal mb-1 text-xs font-black tracking-wider text-teal-700">
                   INSTANT DELIVERY
                 </div>
-                <h1 className="text-2xl md:text-4xl font-black text-white tracking-tight">
-                  {product.name}
+                <h1 className="text-2xl font-black tracking-tight text-gray-800 md:text-4xl dark:text-white">
+                  {product?.name}
                 </h1>
               </div>
             </div>
@@ -119,57 +91,57 @@ const Product = () => {
         </div>
 
         {/* ===== Package Selection ===== */}
-        <div className="bg-gray-800 rounded-2xl shadow-xl border-2 border-teal-800 p-6 md:p-8 mb-6 relative overflow-hidden">
-          
-          {/* Section Title */}
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-teal-900/50 rounded-lg flex items-center justify-center">
-              <FiPackage className="text-2xl text-teal" />
+        <div className="relative mb-6 overflow-hidden rounded-2xl border-2 border-teal-800 bg-teal-200 p-6 shadow-xl md:p-8 dark:bg-gray-800">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="bg-teal/40 flex h-10 w-10 items-center justify-center rounded-lg dark:bg-teal-900/50">
+              <FiPackage className="dark:text-teal text-2xl text-teal-700" />
             </div>
-            <div className="text-lg md:text-xl font-black text-white uppercase tracking-wide">
+            <div className="text-lg font-black tracking-wide text-gray-800 uppercase md:text-xl dark:text-white">
               SELECT YOUR PACKAGE
             </div>
           </div>
 
-          {/* Variation Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-            {variations.map((variation) => {
-              const isSelected = selectedVariation?.id === variation.id;
-              const nameText = variation.attributes?.[0]?.option || "Package";
-              const { main, bonus } = parseVariationName(nameText);
+          <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {variations.map((v) => {
+              const isSelected = selectedVar?.id === v.id;
+              const nameText = v.attributes?.[0]?.option || "Package";
+              const { main, bonus } = parseName(nameText);
 
               return (
                 <button
-                  key={variation.id}
-                  onClick={() => handleSelectVariation(variation)}
-                  className={`group relative p-4 rounded-xl border-2 transition-colors duration-200 overflow-hidden cursor-pointer text-start
-                    ${isSelected
-                      ? "border-teal-400 bg-teal-800/40"
-                      : "border-gray-700 bg-gray-700 hover:border-teal-500"
-                    }`}
+                  key={v.id}
+                  onClick={() => {
+                    setSelectedVar(v);
+                    scrollToForm();
+                  }}
+                  className={`group relative rounded-xl border-2 p-4 ${
+                    isSelected
+                      ? "border-teal-400 bg-teal-300 dark:bg-teal-800/40"
+                      : "border-teal-500 hover:border-teal-700 dark:border-gray-700 dark:bg-gray-700"
+                  } cursor-pointer overflow-hidden text-start transition-colors duration-200`}
                 >
                   <div className="flex items-center justify-between gap-3">
                     {/* Left side — text */}
                     <div className="flex flex-col gap-1">
-                      <h3 className="text-base font-extrabold text-white leading-tight">
+                      <h3 className="text-base leading-tight font-extrabold text-gray-800 dark:text-white">
                         {main}
                       </h3>
                       {bonus && (
-                        <span className="text-xs font-bold text-gray-300 mt-0.5">
+                        <span className="mt-0.5 text-xs font-bold text-gray-600 dark:text-gray-300">
                           {bonus}
                         </span>
                       )}
-                      <span className="text-sm font-semibold text-teal-300">
-                        ৳ {variation.price}
+                      <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">
+                        ৳ {v.price}
                       </span>
                     </div>
 
                     {/* Right side — image */}
-                    <div className="shrink-0 w-12 h-12">
+                    <div className="h-12 w-12 shrink-0">
                       <img
-                        src={variation.image?.src || product.images?.[0]?.src}
+                        src={v.image?.src || product.images?.[0]?.src}
                         alt={main}
-                        className="object-contain w-full h-full"
+                        className="h-full w-full object-contain"
                       />
                     </div>
                   </div>
@@ -177,10 +149,8 @@ const Product = () => {
               );
             })}
           </div>
-
-          {/* Checkout Form */}
-          <div id="checkout-form">
-            <GameCheckout selectedVariation={selectedVariation} />
+          <div id="gameform">
+            <GameCheckout selectedVar={selectedVar} />
           </div>
         </div>
       </div>

@@ -63,7 +63,15 @@ const App = () => {
           element={<Login onLoginSuccess={handleLoginSuccess} />}
         />
 
-        <Route path="/profile" element={<Profile handleLogout={handleLogout}/>} />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              isAuthenticated={isAuthenticated}
+              handleLogout={handleLogout}
+            />
+          }
+        />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -5,7 +5,6 @@ import {
   FiLogOut,
   FiMail,
   FiPackage,
-  FiShoppingBag,
   FiUser,
 } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,6 +17,14 @@ const Profile = ({ handleLogout }) => {
   const [userData, setUserData] = useState(null);
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      toast.error("Please login first");
+      navigate("/login");
+    }
+  }, [navigate]);
 
   // Get user data from localStorage
   useEffect(() => {
@@ -37,16 +44,11 @@ const Profile = ({ handleLogout }) => {
       fetchOrders();
     }
   }, [activeTab]);
-
   const fetchOrders = async () => {
     setIsLoading(true);
     try {
-      const fetchOrders = async () => {
-        const data = await getCustomerOrders();
-        setOrders(data);
-      };
-
-      fetchOrders();
+      const data = await getCustomerOrders();
+      setOrders(data);
     } catch (error) {
       console.error("Error fetching orders:", error);
       toast.error("Failed to load orders");
@@ -233,23 +235,6 @@ const Profile = ({ handleLogout }) => {
                         </p>
                         <p className="text-white font-semibold">
                           {userData?.last_name || "N/A"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Customer ID */}
-                  <div className="bg-gray-900/50 rounded-xl p-4 border border-gray-700">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-teal-600/20 flex items-center justify-center">
-                        <FiShoppingBag className="text-teal-400" />
-                      </div>
-                      <div>
-                        <p className="text-gray-400 text-xs uppercase tracking-wide">
-                          Customer ID
-                        </p>
-                        <p className="text-white font-semibold">
-                          {userData?.customer_id || "N/A"}
                         </p>
                       </div>
                     </div>

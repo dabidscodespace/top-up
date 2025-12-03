@@ -126,7 +126,7 @@ const GameCheckout = ({ selectedVariation }) => {
             ⚠ Please{" "}
             <button
               onClick={() => navigate("/login")}
-              className="underline hover:text-yellow-300"
+              className="underline hover:text-yellow-300 cursor-pointer"
             >
               login
             </button>{" "}

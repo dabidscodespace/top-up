@@ -8,7 +8,7 @@ import { LuHeadphones } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 
-const MobileNav = () => {
+const MobileNav = ({onSearchClick}) => {
   const { isAuthenticated, user, isDarkMode, toggleTheme } = useShop();
 
   const getUserInitial = () => {
@@ -33,7 +33,7 @@ const MobileNav = () => {
         </Link>
 
         {/* Search */}
-        <button className="group relative flex cursor-pointer flex-col items-center gap-1">
+        <button onClick={onSearchClick} className="group relative flex cursor-pointer flex-col items-center gap-1">
           <div className="group-hover:bg-teal/20 group-hover:border-teal rounded-2xl border border-gray-700 bg-gray-800/50 p-3 transition-all duration-300">
             <IoSearchOutline className="group-hover:text-teal text-xl text-gray-400" />
           </div>

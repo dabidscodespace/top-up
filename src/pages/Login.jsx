@@ -77,6 +77,7 @@ const Login = () => {
         display_name: response.display_name,
         first_name: response.first_name,
         last_name: response.last_name,
+        date_created: response.date_created,
       };
 
       login(response.token, userData);

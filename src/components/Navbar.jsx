@@ -1,3 +1,5 @@
+// components/Navbar.jsx
+import { useState } from "react";
 import {
   IoMoonOutline,
   IoSearchOutline,
@@ -7,9 +9,11 @@ import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useShop } from "../context/ShopContext";
 import MobileNav from "./MobileNav";
+import SearchModal from "./SearchModal";
 
 const Navbar = () => {
   const { isAuthenticated, user, isDarkMode, toggleTheme } = useShop();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // Get user initial for avatar
   const getUserInitial = () => {
@@ -17,6 +21,9 @@ const Navbar = () => {
     if (user?.username) return user.username.charAt(0).toUpperCase();
     return "U";
   };
+
+  const openSearch = () => setIsSearchOpen(true);
+  const closeSearch = () => setIsSearchOpen(false);
 
   return (
     <div>
@@ -50,10 +57,15 @@ const Navbar = () => {
             </Link>
 
             <div className="hidden items-center gap-6 md:flex">
-              <button className="from-teal flex cursor-pointer items-center justify-center gap-3 rounded-lg border-2 border-teal-500/50 bg-linear-to-br to-teal-700 px-4 py-1 font-bold text-white">
+              {/* Search Button - Opens Modal */}
+              <button
+                onClick={openSearch}
+                className="from-teal flex cursor-pointer items-center justify-center gap-3 rounded-lg border-2 border-teal-500/50 bg-linear-to-br to-teal-700 px-4 py-1 font-bold text-white transition-all duration-300 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-500/20"
+              >
                 <IoSearchOutline />
                 Search
               </button>
+
               <button
                 onClick={toggleTheme}
                 className="text-teal cursor-pointer rounded-2xl border border-teal-700 bg-gray-800/50 p-3"
@@ -64,6 +76,7 @@ const Navbar = () => {
                   <IoSunnyOutline className="group-hover:text-teal text-xl text-gray-400" />
                 )}
               </button>
+
               {isAuthenticated ? (
                 <Link to={"/profile"} className="group relative">
                   <div className="from-teal flex h-11 w-11 cursor-pointer items-center justify-center rounded-2xl border-2 border-teal-500 bg-linear-to-br to-teal-700 transition-all duration-300 group-hover:border-teal-400 group-hover:shadow-lg group-hover:shadow-teal-500/30">
@@ -85,7 +98,14 @@ const Navbar = () => {
           </div>
         </div>
       </header>
-      <MobileNav isAuthenticated={isAuthenticated} />
+
+      <MobileNav
+        isAuthenticated={isAuthenticated}
+        onSearchClick={openSearch}
+      />
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
     </div>
   );
 };

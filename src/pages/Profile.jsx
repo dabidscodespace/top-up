@@ -22,6 +22,29 @@ const Profile = () => {
     return <Navigate to="/login" replace />;
   }
 
+  // Format join date
+  const formatJoinDate = (dateString) => {
+    if (!dateString) return "N/A";
+
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  // Calculate days since joining
+  const getDaysSinceJoining = (dateString) => {
+    if (!dateString) return null;
+
+    const joinDate = new Date(dateString);
+    const today = new Date();
+    const diffTime = Math.abs(today - joinDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
   // Fetch orders when orders tab is active
   useEffect(() => {
     if (activeTab === "orders") {

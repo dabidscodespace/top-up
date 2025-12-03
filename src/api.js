@@ -215,6 +215,7 @@ export const loginUser = async (credentials) => {
       customer_id: customer?.id || null,
       first_name: customer?.first_name || jwtData.user_nicename,
       last_name: customer?.last_name || "",
+      date_created: customer?.date_created || null, 
     };
   } catch (err) {
     console.error("loginUser error:", err.response?.data || err.message);

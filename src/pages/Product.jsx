@@ -79,7 +79,7 @@ const Product = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-900">
-        <Loader size={56} color="border-teal" />
+        <Loader />
       </div>
     );
   }

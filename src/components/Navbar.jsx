@@ -1,10 +1,17 @@
-import { FiUser } from "react-icons/fi";
 import { IoSearchOutline, IoSunnyOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import MobileNav from "./MobileNav";
 
-const Navbar = ({ isAuthenticated, onLogOut }) => {
+const Navbar = ({ isAuthenticated }) => {
+  const userData = JSON.parse(localStorage.getItem("user_data"));
+
+  const getUserInitial = () => {
+    if (userData?.display_name)
+      return userData.display_name.charAt(0).toUpperCase();
+    if (userData?.username) return userData.username.charAt(0).toUpperCase();
+    return "U";
+  };
   return (
     <div>
       <header className="w-full bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 border-b-2 border-teal-600/30 fixed top-0 left-0 z-50">
@@ -45,28 +52,14 @@ const Navbar = ({ isAuthenticated, onLogOut }) => {
                 <IoSunnyOutline size={20} />
               </button>
               {isAuthenticated ? (
-                <div className="group relative">
-                  <div className="p-3 rounded-full bg-teal-600 flex items-center justify-center text-lg text-white cursor-pointer">
-                    <FiUser />
+                <Link to={"/profile"} className="group relative">
+                  <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-teal to-teal-700 flex items-center justify-center border-2 border-teal-500 group-hover:border-teal-400 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-teal-500/30 cursor-pointer">
+                    <span className="text-white font-bold text-lg">
+                      {getUserInitial()}
+                    </span>
+                    <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
                   </div>
-                  <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-5 ">
-                    <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-gray-900 text-teal-700 rounded border-teal border-2">
-                      <Link
-                        to={"/profile"}
-                        className="cursor-pointer hover:text-teal"
-                      >
-                        My Profile
-                      </Link>
-                      <Link
-                        to={"/login"}
-                        onClick={onLogOut}
-                        className="cursor-pointer hover:text-teal"
-                      >
-                        Logout
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                </Link>
               ) : (
                 <Link
                   to={"/login"}
@@ -79,7 +72,7 @@ const Navbar = ({ isAuthenticated, onLogOut }) => {
           </div>
         </div>
       </header>
-      <MobileNav />
+      <MobileNav isAuthenticated={isAuthenticated} />
     </div>
   );
 };

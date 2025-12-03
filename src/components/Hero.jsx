@@ -36,7 +36,7 @@ const Hero = ({ onExploreClick }) => {
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center md:justify-start px-4 md:px-0">
                 <Button
                   text={"GAMING GADGETS"}
-                  textColor={"white"}
+                  textColor={"text-white"}
                   bgColor={
                     "bg-linear-to-r from-teal-600 via-teal-500 to-teal-600"
                   }
@@ -45,7 +45,7 @@ const Hero = ({ onExploreClick }) => {
                 />
                 <Button
                   text={"GAME COIN TOP-UP"}
-                  textColor={"teal"}
+                  textColor={"text-teal"}
                   bgColor={"bg-gray-800"}
                   border={"border-2"}
                   borderColor={"border-teal"}

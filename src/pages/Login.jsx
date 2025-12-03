@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginUser, registerStoreUser } from "../api";
 import { assets } from "../assets/assets";
+import Loader from "../components/Loader";
 
-const Login = ({ onLoginSuccess, showLoader }) => {
+const Login = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
-  const [isLoginMode, setIsLoginMode] = useState(true);  // true = Login, false = Sign Up
-  
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Local loading state
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -32,7 +33,7 @@ const Login = ({ onLoginSuccess, showLoader }) => {
   // Handle Registration
   const handleRegister = async (e) => {
     e.preventDefault();
-    showLoader(true);
+    setIsLoading(true);
 
     try {
       await registerStoreUser({
@@ -42,20 +43,20 @@ const Login = ({ onLoginSuccess, showLoader }) => {
       });
 
       toast.success("Account created! Please login.");
-      setIsLoginMode(true);  // Switch to login mode
+      setIsLoginMode(true); // Switch to login mode
       resetForm();
     } catch (error) {
       console.error("Registration error:", error);
       toast.error("Registration failed. Try different username/email.");
     } finally {
-      showLoader(false);
+      setIsLoading(false);
     }
   };
 
   // Handle Login
   const handleLogin = async (e) => {
     e.preventDefault();
-    showLoader(true);
+    setIsLoading(true);
 
     try {
       const response = await loginUser({
@@ -81,17 +82,25 @@ const Login = ({ onLoginSuccess, showLoader }) => {
 
       // Notify App that login was successful
       onLoginSuccess();
-      
+
       toast.success(`Welcome, ${response.display_name || response.username}!`);
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Invalid username or password");
     } finally {
-      showLoader(false);
+      setIsLoading(false);
       resetForm();
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 px-3">

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer";
-import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
@@ -14,11 +13,6 @@ import Profile from "./pages/Profile";
 const App = () => {
   const location = useLocation();
 
-  // ═══════════════════════════════════════════════════════════
-  // STATES - Clear naming
-  // ═══════════════════════════════════════════════════════════
-
-  const [isLoading, setIsLoading] = useState(false); // For loader
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Is user logged in?
 
   // Routes where we hide navbar/footer
@@ -34,10 +28,6 @@ const App = () => {
     setIsAuthenticated(!!token); // Convert to boolean
   }, []);
 
-  // ═══════════════════════════════════════════════════════════
-  // HANDLER FUNCTIONS - Clear naming
-  // ═══════════════════════════════════════════════════════════
-
   // Called after successful login
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
@@ -50,19 +40,12 @@ const App = () => {
     setIsAuthenticated(false);
   };
 
-  // Show/hide loader
-  const showLoader = (status) => {
-    setIsLoading(status);
-  };
-
   // ═══════════════════════════════════════════════════════════
   // RENDER
   // ═══════════════════════════════════════════════════════════
 
   return (
     <div>
-      {isLoading && <Loader />}
-
       {!isAuthPage && (
         <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       )}
@@ -77,15 +60,10 @@ const App = () => {
 
         <Route
           path="/login"
-          element={
-            <Login
-              onLoginSuccess={handleLoginSuccess}
-              showLoader={showLoader}
-            />
-          }
+          element={<Login onLoginSuccess={handleLoginSuccess} />}
         />
 
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile handleLogout={handleLogout}/>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

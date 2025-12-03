@@ -5,7 +5,7 @@ import { assets } from "../assets/assets";
 
 const Banner = () => {
   return (
-    <div className="relative z-10 w-full overflow-hidden rounded-4xl">
+    <div className="relative z-10 w-full overflow-hidden rounded-4xl bg-teal-200 dark:bg-gray-900">
       <Swiper
         modules={[Autoplay]}
         spaceBetween={0}
